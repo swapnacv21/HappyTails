@@ -35,6 +35,12 @@ def shop_login(req):
         return render(req,'login.html')
     
 
+def shop_logout(req):
+    logout(req)
+    req.session.flush()      #-------------------delete session
+    return redirect(shop_login)
+    
+
 def shop_home(req):
     if 'shop' in req.session:
         pet=Pets.objects.all()
@@ -42,10 +48,25 @@ def shop_home(req):
     else:
         return redirect(shop_login)
     
-
-def user_home(req):
-    if 'user' in req.session:
-        data=Pets.objects.all()
-        return render(req,'user/customer_home.html',{'data':data})
+def register(req):
+    if req.method=='POST':
+        name=req.POST['name']
+        email=req.POST['email']
+        password=req.POST['password']
+        try:
+            data=User.objects.create_user(first_name=name,email=email,password=password,username=email)
+            data.save()
+            return redirect(shop_login)
+        except:
+            messages.warning(req,"Email Exists")
+            return redirect(register)
     else:
-        return redirect(shop_login)
+        return render(req,'user/register.html')
+    
+    
+# def user_home(req):
+#     if 'user' in req.session:
+#         data=Pets.objects.all()
+#         return render(req,'user/customer_home.html',{'data':data})
+#     else:
+#         return redirect(shop_login)
