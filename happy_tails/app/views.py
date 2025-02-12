@@ -48,6 +48,56 @@ def shop_home(req):
     else:
         return redirect(shop_login)
     
+
+
+def add_pet(req):
+    if req.method=='POST':
+        id=req.POST['pet_id']
+        name=req.POST['pet_name']
+        gender=req.POST['pet_gender']
+        age=req.POST['pet_age']
+        adoption_fee=req.POST['adoption_fee']
+        dis=req.POST['pet_description']
+        file=req.FILES['pet_img']
+        data=Pets.objects.create(pet_id=id,pet_name=name,gender=gender,age=age,adoption_fee=adoption_fee,dis=dis,img=file)
+        data.save()
+        return redirect(shop_home)
+    return render(req,'shop/add_pet.html')
+
+
+
+def edit_product(req,id):
+    pro=Product.objects.get(pk=id)
+    if req.method=='POST':
+        e_id=req.POST['pro_id']
+        name=req.POST['name']
+        discription=req.POST['discription']
+        price=req.POST['price']
+        offer_price=req.POST['o_price']
+        file=req.FILES.get('img')
+        if file:
+            Product.objects.filter(pk=id).update(product_id=e_id,product_name=name,price=price,offer_price=offer_price,img=file,dis=discription)
+        else:
+            Product.objects.filter(pk=id).update(product_id=e_id,product_name=name,price=price,offer_price=offer_price,dis=discription)
+        return redirect(shop_home1)
+    return render(req,'shop/edit_product.html',{'data':pro})
+
+def delete_product(req,id):
+    data=Product.objects.get(pk=id)
+    url=data.img.url
+    url=url.split('/')[-1]
+    os.remove('media/'+url)
+    data.delete()
+    return redirect(shop_home1)
+
+
+
+
+
+
+
+
+    
 def register(req):
     if req.method=='POST':
         name=req.POST['name']
