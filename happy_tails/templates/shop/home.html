@@ -106,10 +106,10 @@
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="shop_home">Home</a>
+            <a class="nav-link fw-light" href="shop_home">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link fw-light" href="add_product">Add Product</a>
+            <a class="nav-link fw-light" href="add_pet">Add Pet</a>
           </li>
           <li class="nav-item">
             <a class="nav-link fw-light" href="bookings">Adoption Details</a>
@@ -121,8 +121,8 @@
           <!-- Search Bar -->
           <li class="nav-item">
             <form class="d-flex" action="/search" method="get">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="query">
-              <button class="btn btn-outline-dark" type="submit">Search</button>
+              <input class="form-control me-2 fw-light" type="search" placeholder="Search" aria-label="Search" name="query">
+              <button class="btn btn-outline-dark " type="submit">Search</button>
             </form>
           </li>
         </ul>
@@ -135,10 +135,10 @@
   <nav class="navbar navbar-expand-sm bg-light justify-content-center">
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">Dogs and Puppies</a>
+        <a class="nav-link" href="#">Dogs & Puppies</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Cats and Kittens</a>
+        <a class="nav-link" href="#">Cats & Kittens</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Other type of Pets</a>
@@ -164,6 +164,29 @@
   <!-- carousel end -->
 
 
+  <div class="container mt-5">
+    <div class="row">
+        {% for pet in pets %}
+        <div class="col-lg-4">
+            <div class="card" >
+                <img class="card-img-top" src="{{pet.img.url}}" alt="Card image" style="width:100%;height: 320px;">
+                <div class="card-body">
+                    <h4 class="card-title">{{pet.pet_name}}</h4>
+                    <p class="card-text fw-light fw-secondary">{{pet.gender}}</p>
+                    <p class="card-text">{{pet.age}}</p>
+                    <p class="card-text fw-light fw-secondary">{{pet.adoption_fee}}</p>
+                    <p class="card-text fw-light fw-secondary">{{pet.dis}}</p>
+                    <div >
+                        <a href="edit_pet/{{pet.pk}}" class="btn" style="background-color: rgb(186, 232, 230);width: 100%;">Edit</a>
+                        <a href="delete_product/{{pro.pk}}" class="btn mt-3" style="background-color: rgb(186, 232, 230);width: 100%;">Delete</a>
+                    </div>
+                    <!-- <p class="card-text mt-3">{{pro.dis}}</p> -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
   
 
